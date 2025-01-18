@@ -1,0 +1,26 @@
+import { LuSparkles, LuShieldCheck, LuAudioLines, LuBox, LuBoxes, LuArchive, LuChartBar, LuTrendingUp, LuHandHelping, LuMessagesSquare, LuDraftingCompass, LuFlag, LuCrown, LuHeart, LuThumbsUp, LuUnplug, LuZap, LuHandHeart, LuVolume, LuSearchCheck, LuMic, LuText } from "react-icons/lu";
+
+export const TIMELINE_ICONS = {
+  sparkles: LuSparkles,
+  shield: LuShieldCheck,
+  audio: LuAudioLines,
+  box: LuBox,
+  boxes: LuBoxes,
+  archive: LuArchive,
+  chart: LuChartBar,
+  trending: LuTrendingUp,
+  hand: LuHandHelping,
+  messages: LuMessagesSquare,
+  drafting: LuDraftingCompass,
+  flag: LuFlag,
+  crown: LuCrown,
+  heart: LuHeart,
+  thumbs: LuThumbsUp,
+  unplug: LuUnplug,
+  zap: LuZap,
+  handheart: LuHandHeart,
+  volume: LuVolume,
+  search: LuSearchCheck,
+  mic: LuMic,
+  text: LuText,
+};

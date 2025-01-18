@@ -1,0 +1,10 @@
+{
+  "name": "hoqs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/hoqs/src",
+  "projectType": "application",
+  "implicitDependencies": ["core-components"],
+  "tags": [],
+  "// targets": "to see all targets run: nx show project main-site --web",
+  "targets": {}
+}
