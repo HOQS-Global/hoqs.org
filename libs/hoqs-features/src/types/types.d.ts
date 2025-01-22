@@ -1,5 +1,4 @@
 import { Tables } from './supabase';
-import { TIMELINE_ICONS } from '../lib/variables';
 
 export type SpeakerCabinet = MergeWithOverwrite<
   Tables<'cabinets'>,
@@ -45,6 +44,8 @@ export type DriverRecommendationWithDriver = DriverRecommendation & {
     x_max: number;
   };
 };
+
+export type DocumentType = Tables<'documents'>;
 
 
 export function rankToRankNumber(rank: DriverRank): number {
