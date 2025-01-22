@@ -2,7 +2,13 @@
   "name": "@hoqs/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "deploy": "npm run build; gh-pages -d dist/apps/hoqs",
+    "dev": "nx serve hoqs",
+    "build": "nx build hoqs",
+    "test": "nx test hoqs",
+    "gentypes": "npx supabase gen types typescript --project-id \"vgtljajaxrfrybokahvz\" --schema public > libs/hoqs-features/src/types/supabase.d.ts"
+  },
   "type": "module",
   "private": true,
   "dependencies": {
