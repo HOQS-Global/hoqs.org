@@ -16,10 +16,13 @@ import { Route as LicenseImport } from './routes/license'
 import { Route as CabinetsImport } from './routes/cabinets'
 import { Route as AboutImport } from './routes/about'
 import { Route as IndexImport } from './routes/index'
+import { Route as WikiIndexImport } from './routes/wiki/index'
 import { Route as DriversIndexImport } from './routes/drivers/index'
 import { Route as CabinetsIndexImport } from './routes/cabinets/index'
+import { Route as WikiIdIndexImport } from './routes/wiki/$id.index'
 import { Route as DriversIdIndexImport } from './routes/drivers/$id.index'
 import { Route as CabinetsIdIndexImport } from './routes/cabinets/$id.index'
+import { Route as WikiIdEditImport } from './routes/wiki/$id.edit'
 import { Route as DriversIdEditImport } from './routes/drivers/$id.edit'
 import { Route as CabinetsIdEditImport } from './routes/cabinets/$id.edit'
 
@@ -55,6 +58,12 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const WikiIndexRoute = WikiIndexImport.update({
+  id: '/wiki/',
+  path: '/wiki/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DriversIndexRoute = DriversIndexImport.update({
   id: '/drivers/',
   path: '/drivers/',
@@ -67,6 +76,12 @@ const CabinetsIndexRoute = CabinetsIndexImport.update({
   getParentRoute: () => CabinetsRoute,
 } as any)
 
+const WikiIdIndexRoute = WikiIdIndexImport.update({
+  id: '/wiki/$id/',
+  path: '/wiki/$id/',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const DriversIdIndexRoute = DriversIdIndexImport.update({
   id: '/drivers/$id/',
   path: '/drivers/$id/',
@@ -77,6 +92,12 @@ const CabinetsIdIndexRoute = CabinetsIdIndexImport.update({
   id: '/$id/',
   path: '/$id/',
   getParentRoute: () => CabinetsRoute,
+} as any)
+
+const WikiIdEditRoute = WikiIdEditImport.update({
+  id: '/wiki/$id/edit',
+  path: '/wiki/$id/edit',
+  getParentRoute: () => rootRoute,
 } as any)
 
 const DriversIdEditRoute = DriversIdEditImport.update({
@@ -144,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DriversIndexImport
       parentRoute: typeof rootRoute
     }
+    '/wiki/': {
+      id: '/wiki/'
+      path: '/wiki'
+      fullPath: '/wiki'
+      preLoaderRoute: typeof WikiIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/cabinets/$id/edit': {
       id: '/cabinets/$id/edit'
       path: '/$id/edit'
@@ -158,6 +186,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DriversIdEditImport
       parentRoute: typeof rootRoute
     }
+    '/wiki/$id/edit': {
+      id: '/wiki/$id/edit'
+      path: '/wiki/$id/edit'
+      fullPath: '/wiki/$id/edit'
+      preLoaderRoute: typeof WikiIdEditImport
+      parentRoute: typeof rootRoute
+    }
     '/cabinets/$id/': {
       id: '/cabinets/$id/'
       path: '/$id'
@@ -170,6 +205,13 @@ declare module '@tanstack/react-router' {
       path: '/drivers/$id'
       fullPath: '/drivers/$id'
       preLoaderRoute: typeof DriversIdIndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/wiki/$id/': {
+      id: '/wiki/$id/'
+      path: '/wiki/$id'
+      fullPath: '/wiki/$id'
+      preLoaderRoute: typeof WikiIdIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -201,10 +243,13 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/cabinets/': typeof CabinetsIndexRoute
   '/drivers': typeof DriversIndexRoute
+  '/wiki': typeof WikiIndexRoute
   '/cabinets/$id/edit': typeof CabinetsIdEditRoute
   '/drivers/$id/edit': typeof DriversIdEditRoute
+  '/wiki/$id/edit': typeof WikiIdEditRoute
   '/cabinets/$id': typeof CabinetsIdIndexRoute
   '/drivers/$id': typeof DriversIdIndexRoute
+  '/wiki/$id': typeof WikiIdIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -214,10 +259,13 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/cabinets': typeof CabinetsIndexRoute
   '/drivers': typeof DriversIndexRoute
+  '/wiki': typeof WikiIndexRoute
   '/cabinets/$id/edit': typeof CabinetsIdEditRoute
   '/drivers/$id/edit': typeof DriversIdEditRoute
+  '/wiki/$id/edit': typeof WikiIdEditRoute
   '/cabinets/$id': typeof CabinetsIdIndexRoute
   '/drivers/$id': typeof DriversIdIndexRoute
+  '/wiki/$id': typeof WikiIdIndexRoute
 }
 
 export interface FileRoutesById {
@@ -229,10 +277,13 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/cabinets/': typeof CabinetsIndexRoute
   '/drivers/': typeof DriversIndexRoute
+  '/wiki/': typeof WikiIndexRoute
   '/cabinets/$id/edit': typeof CabinetsIdEditRoute
   '/drivers/$id/edit': typeof DriversIdEditRoute
+  '/wiki/$id/edit': typeof WikiIdEditRoute
   '/cabinets/$id/': typeof CabinetsIdIndexRoute
   '/drivers/$id/': typeof DriversIdIndexRoute
+  '/wiki/$id/': typeof WikiIdIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -245,10 +296,13 @@ export interface FileRouteTypes {
     | '/login'
     | '/cabinets/'
     | '/drivers'
+    | '/wiki'
     | '/cabinets/$id/edit'
     | '/drivers/$id/edit'
+    | '/wiki/$id/edit'
     | '/cabinets/$id'
     | '/drivers/$id'
+    | '/wiki/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -257,10 +311,13 @@ export interface FileRouteTypes {
     | '/login'
     | '/cabinets'
     | '/drivers'
+    | '/wiki'
     | '/cabinets/$id/edit'
     | '/drivers/$id/edit'
+    | '/wiki/$id/edit'
     | '/cabinets/$id'
     | '/drivers/$id'
+    | '/wiki/$id'
   id:
     | '__root__'
     | '/'
@@ -270,10 +327,13 @@ export interface FileRouteTypes {
     | '/login'
     | '/cabinets/'
     | '/drivers/'
+    | '/wiki/'
     | '/cabinets/$id/edit'
     | '/drivers/$id/edit'
+    | '/wiki/$id/edit'
     | '/cabinets/$id/'
     | '/drivers/$id/'
+    | '/wiki/$id/'
   fileRoutesById: FileRoutesById
 }
 
@@ -284,8 +344,11 @@ export interface RootRouteChildren {
   LicenseRoute: typeof LicenseRoute
   LoginRoute: typeof LoginRoute
   DriversIndexRoute: typeof DriversIndexRoute
+  WikiIndexRoute: typeof WikiIndexRoute
   DriversIdEditRoute: typeof DriversIdEditRoute
+  WikiIdEditRoute: typeof WikiIdEditRoute
   DriversIdIndexRoute: typeof DriversIdIndexRoute
+  WikiIdIndexRoute: typeof WikiIdIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -295,8 +358,11 @@ const rootRouteChildren: RootRouteChildren = {
   LicenseRoute: LicenseRoute,
   LoginRoute: LoginRoute,
   DriversIndexRoute: DriversIndexRoute,
+  WikiIndexRoute: WikiIndexRoute,
   DriversIdEditRoute: DriversIdEditRoute,
+  WikiIdEditRoute: WikiIdEditRoute,
   DriversIdIndexRoute: DriversIdIndexRoute,
+  WikiIdIndexRoute: WikiIdIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -315,8 +381,11 @@ export const routeTree = rootRoute
         "/license",
         "/login",
         "/drivers/",
+        "/wiki/",
         "/drivers/$id/edit",
-        "/drivers/$id/"
+        "/wiki/$id/edit",
+        "/drivers/$id/",
+        "/wiki/$id/"
       ]
     },
     "/": {
@@ -346,6 +415,9 @@ export const routeTree = rootRoute
     "/drivers/": {
       "filePath": "drivers/index.tsx"
     },
+    "/wiki/": {
+      "filePath": "wiki/index.tsx"
+    },
     "/cabinets/$id/edit": {
       "filePath": "cabinets/$id.edit.tsx",
       "parent": "/cabinets"
@@ -353,12 +425,18 @@ export const routeTree = rootRoute
     "/drivers/$id/edit": {
       "filePath": "drivers/$id.edit.tsx"
     },
+    "/wiki/$id/edit": {
+      "filePath": "wiki/$id.edit.tsx"
+    },
     "/cabinets/$id/": {
       "filePath": "cabinets/$id.index.tsx",
       "parent": "/cabinets"
     },
     "/drivers/$id/": {
       "filePath": "drivers/$id.index.tsx"
+    },
+    "/wiki/$id/": {
+      "filePath": "wiki/$id.index.tsx"
     }
   }
 }
