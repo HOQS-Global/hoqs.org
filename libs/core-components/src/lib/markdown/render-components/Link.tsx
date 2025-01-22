@@ -1,4 +1,4 @@
-import { Link as LinkUI } from '@nextui-org/react';
+import { Link as LinkUI } from '@heroui/link';
 
 export default function Link({
   href,

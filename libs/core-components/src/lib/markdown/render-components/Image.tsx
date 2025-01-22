@@ -1,11 +1,9 @@
-import React from 'react'
-import ImageCaroussel from '../../images/ImageCaroussel'
-
+import ImageCarousel from "../../images/ImageCarousel"
 
 type Props = { src: string, alt?: string, title?: string }
 
 export default function Image({src, alt, title}: Props) {
-  return <ImageCaroussel
+  return <ImageCarousel
         images={[
             {
             title: title ?? alt ?? 'No Title',

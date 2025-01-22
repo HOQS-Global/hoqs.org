@@ -1,4 +1,3 @@
-import { Outlet } from "@tanstack/react-router";
 import BackgroundEffect from "./BackgroundEffect";
 import PageContainer from "./PageContainer";
 
