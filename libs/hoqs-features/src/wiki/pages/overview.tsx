@@ -1,9 +1,11 @@
-import React from 'react'
+import { PageContainer } from '@hoqs/core-components'
+import AddDocumentButton from '../../document/AddDocumentButton'
 
-type Props = {}
-
-export function WikiOverview({}: Props) {
+export function WikiOverview() {
   return (
-    <div>Overview</div>
+    <PageContainer>
+      <AddDocumentButton />
+      <div>List of all documents</div>
+    </PageContainer>
   )
 }

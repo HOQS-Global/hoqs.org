@@ -53,7 +53,7 @@ export default function Editor({defaultDocument}: EditorProps) {
 
   return (
     <div className="space-y-4">
-      <UnpublishedBanner show={defaultDocument.published} />
+      <UnpublishedBanner show={!defaultDocument.published} />
       <Tabs aria-label="Options">
         <Tab key="edit" title="Edit">
           <div className="flex flex-col gap-4">

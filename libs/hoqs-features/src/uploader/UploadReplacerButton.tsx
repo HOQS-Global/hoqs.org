@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import Dropzone from 'react-dropzone';
 import toast from 'react-hot-toast';
 import { supabase } from '../helpers/supabase';
+import { useFileUpdater } from '../helpers/upload';
 
 type Props<T> = {
   file: T;
@@ -19,6 +20,10 @@ export function UploaderReplacerButton<T extends AbstractStorageFile>({
   ...props
 }: Props<T>) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const updateFile = useFileUpdater({
+      allowedTypes,
+      fileToReplace: file,
+  });
 
   function uploadFile(files: File[]) {
     if (files.length > 1 || files.length === 0) {
@@ -26,44 +31,8 @@ export function UploaderReplacerButton<T extends AbstractStorageFile>({
     }
     const file = files[0];
 
-    if (!assertFileType(file)) return;
-
-    toast.promise(uploadToSupabase(file), {
-      loading: `Updated ${file.name}`,
-      success: `Successfully updated ${file.name}`,
-      error: (err) => `Failed to upload ${file.name} - ${err.message}`,
-    });
-  }
-
-  function assertFileType(file: File) {
-    if (allowedTypes === undefined) return true;
-
-    if (!allowedTypes.includes(file.type)) {
-      toast.error(`File type ${file.type} is not allowed`);
-      return false;
-    }
-    return true;
-  }
-
-  async function uploadToSupabase(newFile: File) {
-    const totalPath = file.url.split('/storage/v1/object/public/')?.[1];
-    const bucket = totalPath?.split('/')?.[0];
-    const path = totalPath?.substring(bucket?.length + 1);
-    if (!totalPath || !path || !bucket) throw new Error('Invalid path');
-
-    const { error } = await supabase.storage
-      .from(bucket)
-      .update(path, newFile, {
-        upsert: true,
-      });
-
-    if (error) throw error;
-
-    setFile({
-      ...file,
-      updatedAt: new Date().toISOString(),
-      mimetype: newFile.type,
-      size: newFile.size,
+    updateFile(file).then((newFile) => {
+      setFile(newFile);
     });
   }
 

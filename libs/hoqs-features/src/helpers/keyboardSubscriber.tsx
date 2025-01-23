@@ -6,7 +6,7 @@ type KeyboardSubscriberProps = {
   onKey?: (key: string) => void;
 };
 
-// This is a component that subscribes to key events and calls the appropriate
+// This is a component that subscribes to key events and calls the appropriate function
 // It is a component and not a hook because it sometimes needs values from nested components
 export function KeyboardSubscriber({
   onEnter,

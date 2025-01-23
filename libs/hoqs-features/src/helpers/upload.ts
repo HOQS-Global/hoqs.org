@@ -13,7 +13,7 @@ type FileUploaderProps = {
 export function useFileUploader({
   allowedTypes,
   supabasePath,
-  supabaseBucket,
+  supabaseBucket
 }: FileUploaderProps) {
   const uploadFiles = useMemo(() => {
     return async function uploadFile(file: File): Promise<AbstractStorageFile> {
@@ -88,3 +88,60 @@ export async function uploadToSupabase(
       'File of same name already exists. Opted to use existing file in cloud storage. If the current file is deprecated or wrong, please rename the file to be uploaded and try again.'
     );
 }
+
+type FileUpdaterProps<T extends AbstractStorageFile> = {
+  allowedTypes: string[] | undefined;
+  fileToReplace: T;
+}
+
+export function useFileUpdater<T extends AbstractStorageFile>({
+  allowedTypes,
+  fileToReplace,
+}: FileUpdaterProps<T>) {
+  const uploadFiles = useMemo(() => {
+    return async function uploadFile(newFile: File): Promise<T> {
+      return new Promise((resolve, reject) => {
+        if (!filetypeIsAllowed(newFile, allowedTypes)) {
+          reject();
+          return;
+        }
+
+        toast.promise(
+          updateFileOnSupabase(newFile, fileToReplace, resolve),
+          {
+            loading: `Uploading ${newFile.name}`,
+            success: `Successfully uploaded ${newFile.name}`,
+            error: (err) => {
+              reject(`Failed to upload ${newFile.name} - ${err.message}`);
+              return `Failed to upload ${newFile.name} - ${err.message}`;
+            },
+          }
+        );
+      });
+    };
+  }, [allowedTypes, fileToReplace]);
+
+  return uploadFiles;
+}
+
+async function updateFileOnSupabase<T extends AbstractStorageFile>(newFile: File, oldFile: T, onFileUploaded: (file: T) => void) {
+    const totalPath = oldFile.url.split('/storage/v1/object/public/')?.[1];
+    const bucket = totalPath?.split('/')?.[0];
+    const path = totalPath?.substring(bucket?.length + 1);
+    if (!totalPath || !path || !bucket) throw new Error('Invalid path');
+
+    const { error } = await supabase.storage
+      .from(bucket)
+      .update(path, newFile, {
+        upsert: true,
+      });
+
+    if (error) throw error;
+
+    onFileUploaded({
+      ...oldFile,
+      updatedAt: new Date().toISOString(),
+      mimetype: newFile.type,
+      size: newFile.size,
+    });
+  }
