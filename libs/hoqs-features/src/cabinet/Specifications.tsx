@@ -123,7 +123,9 @@ export function Specifications({ cabinet }: Props) {
                     content={attribute.help}
                     closeDelay={300}
                   >
-                    <LuCircleHelp className="text-default-500" size={20} />
+                    <div>
+                      <LuCircleHelp className="text-default-500" size={20} />
+                    </div>
                   </Tooltip>
                 )}
               </TableCell>

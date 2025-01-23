@@ -1,5 +1,3 @@
-import { BadgeType } from 'libs/core-components/src/lib/badges/BadgeTypes';
-import { ContributorRole } from '../types/types';
 import { DriverRank } from '../types/types';
 import {
   LuBox,
@@ -12,6 +10,7 @@ import {
   LuZap,
   LuThumbsDown,
 } from 'react-icons/lu';
+import { BadgeType, ContributorRole } from '@hoqs/core-components';
 
 export const CABINET_TYPES = [
   'Kick',

@@ -128,8 +128,9 @@ export function DriverRecommendation({ id }: Props) {
                           classNames={{
                             base: 'max-w-md',
                           }}
-                        >
+                        ><div>
                           <LuMessageSquareText />
+                          </div>
                         </Tooltip>
                       )}
                     </TableCell>
