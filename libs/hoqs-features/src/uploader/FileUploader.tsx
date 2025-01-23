@@ -10,16 +10,16 @@ interface Props {
 }
 
 export function FileUploader({ files, setFiles, path, bucket }: Props) {
-  function addFile(file: AbstractStorageFile) {
-    const newFile = {
+  function addFiles(newFiles: AbstractStorageFile[]) {
+    const newFilesWithDescription = newFiles.map((file) => ({
       description: '',
       ...file,
-    };
+    }));
 
     if (!Array.isArray(files)) {
-      setFiles([newFile]);
+      setFiles(newFilesWithDescription);
     } else {
-      setFiles([...files, newFile]);
+      setFiles([...files, ...newFilesWithDescription]);
     }
   }
 
@@ -28,7 +28,7 @@ export function FileUploader({ files, setFiles, path, bucket }: Props) {
       <Uploader
         supabaseBucket={bucket}
         supabasePath={path}
-        onFileUploaded={addFile}
+        onFilesUploaded={addFiles}
         subtitle="PDF, DOCS, XLSX, etc. Max 20mb"
       />
       <FileList files={files} setFiles={setFiles} />

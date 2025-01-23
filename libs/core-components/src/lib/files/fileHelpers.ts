@@ -6,7 +6,7 @@ export type StorageFile = {
   badges?: string[];
 } & AbstractStorageFile;
 
-export interface AbstractStorageFile {
+export type AbstractStorageFile = {
   title: string;
   url: string;
   updatedAt: string;

@@ -1,6 +1,6 @@
 
 import { AbstractStorageFile, ImageCarousel, StorageImage } from '@hoqs/core-components';
-import { Uploader } from '@hoqs-features';
+import Uploader from './Uploader';
 
 interface Props {
   images: StorageImage[] | null;
@@ -10,13 +10,13 @@ interface Props {
 }
 
 export function ImageUploader({ images, setImages, path, bucket }: Props) {
-  function addImage(file: AbstractStorageFile) {
+  function addImages(files: AbstractStorageFile[]) {
     if (!images) {
-      setImages([{ ...file }]);
+      setImages(files);
       return;
     }
 
-    setImages([...images, { ...file }]);
+    setImages([...images, ...files]);
   }
 
   return (
@@ -24,7 +24,7 @@ export function ImageUploader({ images, setImages, path, bucket }: Props) {
       <Uploader
         supabaseBucket={bucket}
         supabasePath={path}
-        onFileUploaded={addImage}
+        onFilesUploaded={addImages}
         subtitle="PNG, JPG or SVG"
         allowedTypes={allowedFileTypes}
       />
