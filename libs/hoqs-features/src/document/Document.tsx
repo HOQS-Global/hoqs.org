@@ -1,8 +1,8 @@
 import { Header, Markdown } from "@hoqs/core-components";
-import { DocumentType } from "../types/types";
+import { WikiDocument } from "../types/types";
 
 type Props = {
-    document: DocumentType;
+    document: WikiDocument;
   };
   
   export default function Document({ document }: Props) {

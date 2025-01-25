@@ -1,22 +1,23 @@
-import React, { useRef } from 'react'
+import React, { useMemo, useRef } from 'react'
 import { supabase } from '../../helpers/supabase';
-import { DocumentType } from '../../types/types';
+import { WikiDocument } from '../../types/types';
 import { useSupabaseRequest } from '../../helpers/supabaseRequest';
 import { PageContainer, UnpublishedBanner } from '@hoqs/core-components';
 import ProtectedFeature from '../../auth/ProtectedFeature';
 import { Button } from '@heroui/react';
 import { Link } from '@tanstack/react-router';
 import Document from '../../document/Document';
+import WikiDocumenPanel from '../WikiDocumenPanel';
 
 type Props = {id: string}
 
-export function WikiDocument({id}: Props) {
-  const docRef = useRef(supabase.from('documents').select('*').eq('id', id));
-  const { StatusComponent, data } = useSupabaseRequest<DocumentType[]>(docRef.current);
+export function WikiPage({id}: Props) {
+  const docRef = useMemo(() => supabase.from('wikis').select('*').eq('id', id), [id]);
+  const { StatusComponent, data } = useSupabaseRequest<WikiDocument[]>(docRef);
   const document = data?.[0];
   
   return (
-    <PageContainer>
+    <PageContainer leftSideBar={<WikiDocumenPanel/>}>
       <StatusComponent />
       <UnpublishedBanner show={document?.published === false} />
         <ProtectedFeature>

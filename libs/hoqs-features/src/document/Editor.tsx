@@ -7,13 +7,13 @@ import Document from './Document';
 import toast from 'react-hot-toast';
 import { useNavigate } from '@tanstack/react-router';
 import { supabase, toPromise } from '../helpers/supabase';
-import { DocumentType } from '../types/types';
+import { WikiDocument } from '../types/types';
 import { formatDateTime, Text, UnpublishedBanner } from '@hoqs/core-components';
 import { Button, Checkbox, Input, Tab, Tabs } from '@heroui/react';
 import { useFileUploader } from '../helpers/upload';
 
 type EditorProps = {
-  defaultDocument: DocumentType;
+  defaultDocument: WikiDocument;
 }
 
 export default function Editor({defaultDocument}: EditorProps) {
@@ -89,7 +89,7 @@ export default function Editor({defaultDocument}: EditorProps) {
         </Tab>
       </Tabs>
       <div className="flex justify-between">
-        {document.type === "wiki" ?
+        {document.static ?
           <Button color="danger" onClick={deleteDocument}>
             Delete
           </Button> : 

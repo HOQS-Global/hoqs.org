@@ -45,7 +45,7 @@ export type DriverRecommendationWithDriver = DriverRecommendation & {
   };
 };
 
-export type DocumentType = Tables<'documents'>;
+export type WikiDocument = Tables<'wikis'>;
 
 
 export function rankToRankNumber(rank: DriverRank): number {

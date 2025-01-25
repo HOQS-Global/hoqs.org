@@ -1,4 +1,4 @@
-import { WikiDocument } from '@hoqs-features'
+import { WikiPage } from '@hoqs-features'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/wiki/$id/')({
@@ -7,5 +7,5 @@ export const Route = createFileRoute('/wiki/$id/')({
 
 function RouteComponent() {
   const { id } = Route.useParams()
-  return <WikiDocument id={id} />
+  return <WikiPage id={id} />
 }

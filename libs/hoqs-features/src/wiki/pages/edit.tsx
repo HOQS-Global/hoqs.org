@@ -3,19 +3,19 @@ import { supabase } from "../../helpers/supabase";
 import { useSupabaseRequest } from "../../helpers/supabaseRequest";
 import { PageContainer } from "@hoqs/core-components";
 import Editor from "../../document/Editor";
-import { DocumentType } from "../../types/types";
+import { WikiDocument } from "../../types/types";
 
 type Props = {id: string}
 
 export function EditWiki({id}: Props) {
-  const docRef = useRef(supabase.from('documents').select('*').eq('id', id));
-  const { StatusComponent, data } = useSupabaseRequest<DocumentType[]>(docRef.current);
+  const docRef = useRef(supabase.from('wikis').select('*').eq('id', id));
+  const { StatusComponent, data } = useSupabaseRequest<WikiDocument[]>(docRef.current);
 
-  const document = data?.[0];
+  const wiki = data?.[0];
   
   return (
     <PageContainer>
-      {document && <Editor defaultDocument={document} />}
+      {wiki && <Editor defaultDocument={wiki} />}
       <StatusComponent />
     </PageContainer>
   );

@@ -99,36 +99,6 @@ export type Database = {
         }
         Relationships: []
       }
-      documents: {
-        Row: {
-          content: string
-          created_at: string
-          id: string
-          published: boolean
-          title: string
-          type: Database["public"]["Enums"]["document_type"]
-          updated_at: string
-        }
-        Insert: {
-          content: string
-          created_at?: string
-          id: string
-          published?: boolean
-          title: string
-          type?: Database["public"]["Enums"]["document_type"]
-          updated_at?: string
-        }
-        Update: {
-          content?: string
-          created_at?: string
-          id?: string
-          published?: boolean
-          title?: string
-          type?: Database["public"]["Enums"]["document_type"]
-          updated_at?: string
-        }
-        Relationships: []
-      }
       driver_recommendations: {
         Row: {
           cabinet_id: string
@@ -342,6 +312,53 @@ export type Database = {
         }
         Relationships: []
       }
+      wikis: {
+        Row: {
+          category: string
+          content: string
+          created_at: string
+          id: string
+          order: number
+          parent_id: string | null
+          published: boolean
+          static: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category?: string
+          content: string
+          created_at?: string
+          id: string
+          order?: number
+          parent_id?: string | null
+          published?: boolean
+          static?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content?: string
+          created_at?: string
+          id?: string
+          order?: number
+          parent_id?: string | null
+          published?: boolean
+          static?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wikis_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "wikis"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -350,7 +367,6 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      document_type: "blog" | "wiki" | "static"
       role: "guest" | "admin"
     }
     CompositeTypes: {

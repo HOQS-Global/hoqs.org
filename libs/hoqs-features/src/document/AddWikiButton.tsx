@@ -11,7 +11,7 @@ This is a subsection of the document
 ## Section 2
 This is another subsection of the document`;
 
-function AddDocumentButton() {
+export function AddWikiButton() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [document, setDocument] = useState({
     content: emptyDocument,
@@ -24,7 +24,7 @@ function AddDocumentButton() {
 
   function createCabinet() {
     const uploader = toPromise(
-      supabase.from('documents').insert([{ ...document, id: slug }])
+      supabase.from('wikis').insert([{ ...document, id: slug }])
     );
     toast.promise(uploader, {
       loading: 'Saving document to database',
@@ -75,5 +75,3 @@ function AddDocumentButton() {
     </>
   );
 }
-
-export default AddDocumentButton;
